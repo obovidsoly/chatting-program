@@ -1,12 +1,18 @@
 cmake_minimum_required(VERSION 3.0.0)
 project(ChatClient)
 
-set(TARGET client_main)
-file(GLOB_RECURSE SRC_FILES ${CMAKE_CURRENT_SOURCE_DIR}/src/*.c)
+set(TARGET_BIN client_main)
+set(TARGET_LIB client)
+
+file(GLOB_RECURSE SRCS ${CMAKE_CURRENT_SOURCE_DIR}/src/**)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
-link_libraries(pthread)
 
 add_compile_options(-Wall -O2)
 
-add_executable(${TARGET} ${SRC_FILES})
+add_library(${TARGET_LIB} SHARED ${SRCS})
+set_target_properties(${TARGET_LIB} PROPERTIES LIBRARY_OUTPUT_DIRECTORY ${LIB_PATH})
+
+add_executable(${TARGET_BIN} ${CMAKE_CURRENT_SOURCE_DIR}/main.c)
+target_link_libraries(${TARGET_BIN} PUBLIC ${TARGET_LIB})
+set_target_properties(${TARGET_BIN} PROPERTIES RUNTIME_OUTPUT_DIRECTORY ${BIN_PATH})
