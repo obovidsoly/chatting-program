@@ -41,8 +41,6 @@ void sigTermHandler(int signo){
 
 // connect to server
 void init(){
-    int test=0;
-
     addr.sin_family = AF_INET; // 서버 주소 변환
     addr.sin_port = htons(PORT);
     addr.sin_addr.s_addr = inet_addr(IP);
