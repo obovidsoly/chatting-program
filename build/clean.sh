@@ -1,4 +1,16 @@
 #!/bin/bash
 
-ls $(pwd) | grep -v "build.sh\\|clean.sh" | xargs --verbose rm -rf;
-rm -rf $(pwd)/../install
+exclude_list="\
+$(basename $0)\|\
+build.sh
+"
+
+set -e
+
+ls $(pwd) | grep -vx ${exclude_list} | xargs -I ARG rm -rf ARG
+
+rm -rf "$(pwd)/../install"
+
+echo "clean done!"
+
+set +e
